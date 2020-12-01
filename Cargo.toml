@@ -4,6 +4,13 @@ version = "0.1.0"
 authors = ["sksat <sksat@sksat.net>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = """
+Rust library for RASP(https://www.thrustcurve.org/info/raspformat.html) file format.
+"""
+repository = "https://github.com/sk2sat/rasp"
+readme = "README.md"
+license = "MIT"
+
+categories = ["parsing"]
 
 [dependencies]
