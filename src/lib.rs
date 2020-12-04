@@ -22,7 +22,7 @@ pub fn from_str(s: &str) -> Result<Engine, Error> {
 
     // this line must be header
     let header = li.next();
-    println!("header: {}", header.unwrap());
+    //println!("header: {}", header.unwrap());
     let header: Vec<_> = header.unwrap().split_whitespace().collect();
     let name = header[0].to_string();
     let diameter = header[1].parse().unwrap();
@@ -54,4 +54,40 @@ pub fn from_str(s: &str) -> Result<Engine, Error> {
         thrust,
     };
     Ok(eng)
+}
+
+impl std::fmt::Display for Engine {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> core::fmt::Result {
+        let h0 = format!("Name: {}({})", self.name, self.manufacturer);
+        let h1 = format!("Diameter: {}mm, Length: {}mm", self.diameter, self.length);
+        let w = format!(
+            "Weight: total(init)={}kg, propellant={}kg({:.2}%)",
+            self.weight_init,
+            self.weight_propellant,
+            self.weight_propellant / self.weight_init * 100.0
+        );
+        let t = format!(
+            "Thrust: Duration={:.2}s, Total Impulse={:.2}Nt-s, Average={:.2}N, Peak={:.2}N",
+            self.thrust.duration(),
+            self.thrust.total_impulse(),
+            self.thrust.average(),
+            self.thrust.peak()
+        );
+
+        use std::cmp::max;
+        let l = max(
+            max(h0.chars().count(), h1.chars().count()),
+            max(w.chars().count(), t.chars().count()),
+        );
+
+        let _ = write!(f, "{}\n{}\n{}\n{}\n", h0, h1, w, t);
+        let _ = write!(f, "{}\n", "-".repeat(l));
+        let _ = write!(f, "Time(sec) Thrust(N)\n");
+
+        for t in &self.thrust.curve {
+            let _ = write!(f, "{} {}\n", t.time, t.thrust);
+        }
+
+        write!(f, "\n")
+    }
 }

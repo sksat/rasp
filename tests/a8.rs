@@ -38,6 +38,8 @@ fn a8() {
 
     let engine = rasp::from_str(tc_str).unwrap();
 
+    println!("{}", engine);
+
     assert_eq!(engine.name, "A8");
     assert_eq!(engine.diameter, 18);
     assert_eq!(engine.length, 70);

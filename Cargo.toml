@@ -1,6 +1,6 @@
 [package]
 name = "rasp"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["sksat <sksat@sksat.net>"]
 edition = "2018"
 
@@ -13,4 +13,5 @@ license = "MIT"
 
 categories = ["parsing"]
 
-[dependencies]
+[dev-dependencies]
+ureq = "1.5.2"
